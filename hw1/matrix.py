@@ -11,7 +11,7 @@ class Matrix(Tensor):
         self.rows_cnt, self.columns_cnt = dimension
     
     def conv_rc2i(self, row: int, column: int) -> int:
-        if not (0 <= row <= self.rows_cnt and 0 <= column <= self.columns_cnt):
+        if not (0 <= row < self.rows_cnt and 0 <= column < self.columns_cnt):
             raise ValueError('Invalid arguments')
         
         return row * self.columns_cnt + column
@@ -31,7 +31,7 @@ class Matrix(Tensor):
         return "[\n" + "\n\n".join(rows) + "\n]"
     
     def __getitem__(self, key: Union[int, list[int], slice, tuple[Union[int, list, slice], Union[int, list, slice]]]) -> any:
-        
+
         def convert_key(key, size) -> list[int]:
             if isinstance(key, int):
                 return [key] if key > 0 else [key + size]
